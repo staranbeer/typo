@@ -15,7 +15,7 @@ import {
 
 const Header = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = useColorModeValue("gray.100", "#131313");
+  const bgColor = useColorModeValue("gray.50", "#131313");
 
   return (
     <HStack
@@ -28,7 +28,7 @@ const Header = () => {
     >
       {/* mode */}
       <HStack gap={20}>
-        <HStack>
+        <HStack spacing={3}>
           <Box>Mode:</Box>
           <Select>
             <option>Keywords</option>
@@ -36,7 +36,6 @@ const Header = () => {
         </HStack>
 
         {/* stats */}
-
         <HStack spacing={8}>
           <Box color="green.400" fontWeight={"bold"}>
             Right: 4
@@ -48,7 +47,6 @@ const Header = () => {
       </HStack>
 
       {/* color mode */}
-
       <Button
         h={10}
         w={10}
