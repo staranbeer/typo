@@ -7,13 +7,9 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import React from "react";
-import {
-  HiOutlineMicrophone,
-  HiOutlineMoon,
-  HiOutlineSun,
-} from "react-icons/hi";
+import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
 
-const Header = () => {
+const Header = ({ right, wrong }) => {
   const { colorMode, toggleColorMode } = useColorMode();
   const bgColor = useColorModeValue("gray.50", "#131313");
 
@@ -38,10 +34,10 @@ const Header = () => {
         {/* stats */}
         <HStack spacing={8}>
           <Box color="green.400" fontWeight={"bold"}>
-            Right: 4
+            Right: {right}
           </Box>
           <Box color="red.400" fontWeight={"bold"}>
-            Wrong: 0
+            Wrong: {wrong}
           </Box>
         </HStack>
       </HStack>

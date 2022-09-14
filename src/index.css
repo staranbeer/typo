@@ -5,3 +5,16 @@
   margin: 0;
   padding: 0;
 }
+
+.cursor {
+  position: relative;
+}
+
+.cursor::before {
+  position: absolute;
+  bottom: -6px;
+  content: "";
+  background: #fff;
+  width: 80%;
+  height: 4px;
+}
