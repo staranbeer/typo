@@ -9,12 +9,15 @@ const timerSlice = createSlice({
     incrementTimer: (state) => {
       state.timer += 1;
     },
+    stopTimer: (state) => {
+      state.timer = state.timer;
+    },
     resetTimer: (state) => {
       state.timer = 0;
     },
   },
 });
 
-export const { incrementTimer, resetTimer } = timerSlice.actions;
+export const { incrementTimer, resetTimer, stopTimer } = timerSlice.actions;
 
 export default timerSlice.reducer;

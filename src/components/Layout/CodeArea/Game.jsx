@@ -8,7 +8,7 @@ import isInLimit from "../../../../lib/isInlimit";
 import isSameKey from "../../../../lib/isSameKey";
 import Char from "./Char";
 
-const TestCode = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
+const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
   const [pressedKey, setPressedKey] = useState("");
 
   const [arrayIndex, setArrayIndex] = useState(0);
@@ -138,4 +138,4 @@ const TestCode = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
   );
 };
 
-export default React.memo(TestCode);
+export default React.memo(Game);

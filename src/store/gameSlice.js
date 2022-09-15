@@ -7,6 +7,7 @@ const gameSlice = createSlice({
   initialState: {
     hasStarted: false,
     hasEnded: false,
+    duration: 2,
   },
 
   reducers: {
@@ -22,6 +23,6 @@ const gameSlice = createSlice({
   },
 });
 
-export const { startGame, stopGame } = gameSlice.actions;
+export const { startGame, stopGame, duration } = gameSlice.actions;
 
 export default gameSlice.reducer;
