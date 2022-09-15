@@ -1,16 +1,4 @@
-import {
-  Box,
-  Button,
-  Modal,
-  ModalBody,
-  ModalCloseButton,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalOverlay,
-  useDisclosure,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import Header from "./components/Layout/Header";
