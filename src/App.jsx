@@ -1,4 +1,4 @@
-import { Box, Button, VStack } from "@chakra-ui/react";
+import { Box, Button, useDisclosure, VStack } from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import Header from "./components/Layout/Header";
@@ -6,14 +6,19 @@ import TestCode from "./components/Layout/CodeArea/TestCode";
 import { useEffect } from "react";
 import Introduction from "./components/Layout/Introduction";
 import Stats from "./components/Layout/Stats";
+import { useDispatch, useSelector } from "react-redux";
+import { stopGame } from "./store/gameSlice";
 
 const App = () => {
   const [right, setRight] = useState(0);
   const [wrong, setWrong] = useState(0);
   const [duration, setDuration] = useState(2);
   const [timer, setTimer] = useState(0);
-  const [hasStarted, setHasStarted] = useState(false);
-  const [hasEnded, setHasEnded] = useState(false);
+
+  const { hasStarted, hasEnded } = useSelector((state) => state.game);
+  const { isOpen, onClose } = useDisclosure();
+
+  const dispatch = useDispatch();
 
   // start a timer for 30 seconds when the game starts
 
@@ -32,8 +37,7 @@ const App = () => {
   useEffect(() => {
     if (timer === duration) {
       setTimer((prevDuration) => prevDuration);
-      setHasEnded(true);
-      setHasStarted(false);
+      dispatch(stopGame());
     }
   }, [timer]);
 
@@ -89,22 +93,10 @@ const App = () => {
       </Box>
       {/* intro modal */}
 
-      {
-        <Introduction
-          hasEnded={hasEnded}
-          hasStarted={hasStarted}
-          setHasStarted={setHasStarted}
-        />
-      }
+      {<Introduction />}
 
       {/* stats Modal */}
-      {
-        <Stats
-          hasEnded={hasEnded}
-          hasStarted={hasStarted}
-          setHasStarted={setHasStarted}
-        />
-      }
+      {<Stats />}
     </>
   );
 };

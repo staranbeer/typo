@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   GridItem,
   Modal,
@@ -12,31 +11,24 @@ import {
   Select,
   SimpleGrid,
   Text,
-  VStack,
 } from "@chakra-ui/react";
 import React from "react";
 
-const Introduction = ({ hasEnded, hasStarted, setHasStarted }) => {
+const Introduction = () => {
   return (
-    <Modal
-      isOpen={!hasStarted && !hasEnded}
-      onClose={() => setHasStarted(true)}
-      isCentered={true}
-      size="xl"
-      closeOnOverlayClick={false}
-    >
+    <Modal isCentered={true} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Typo</ModalHeader>
         <ModalCloseButton />
-        <ModalBody p={"8"}>
+        <ModalBody py="10" px="8">
           <Text fontSize={"lg"}>
             A typing test and practice tool made specifically for developers.
           </Text>
 
           <Text fontSize={"lg"}>
             Learn to type faster and more accurately by practicing with real
-            keywords from your favorite programming languages.
+            keywords from your favorite programming language.
           </Text>
 
           <br />
@@ -71,12 +63,7 @@ const Introduction = ({ hasEnded, hasStarted, setHasStarted }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button
-            size={["md", "lg"]}
-            colorScheme="blue"
-            mr={3}
-            onClick={() => setHasStarted(true)}
-          >
+          <Button size={["md", "lg"]} colorScheme="blue" mr={3}>
             Start practicing now!
           </Button>
         </ModalFooter>

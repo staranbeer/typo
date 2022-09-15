@@ -10,14 +10,9 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const Stats = ({ hasEnded, hasStarted, setHasStarted }) => {
+const Stats = () => {
   return (
-    <Modal
-      isOpen={!hasStarted && hasEnded}
-      onClose={() => setHasStarted(true)}
-      isCentered={true}
-      size="xl"
-    >
+    <Modal isCentered={true} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Modal Title</ModalHeader>
@@ -25,12 +20,7 @@ const Stats = ({ hasEnded, hasStarted, setHasStarted }) => {
         <ModalBody>the game has ended</ModalBody>
 
         <ModalFooter>
-          <Button
-            size={"lg"}
-            colorScheme="blue"
-            mr={3}
-            onClick={() => setHasStarted(true)}
-          >
+          <Button size={"lg"} colorScheme="blue" mr={3}>
             Start practicing now!
           </Button>
         </ModalFooter>

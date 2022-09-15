@@ -26,7 +26,6 @@ const Header = ({ right, wrong, timer, duration, setDuration }) => {
       px={8}
     >
       {/* mode */}
-
       {/* stats */}
       <HStack spacing={8}>
         <Button color="gray.300" fontWeight={"bold"}>
@@ -39,7 +38,6 @@ const Header = ({ right, wrong, timer, duration, setDuration }) => {
           Wrong: {wrong}
         </Button>
       </HStack>
-
       {/* color mode */}
       <Button
         h={10}
