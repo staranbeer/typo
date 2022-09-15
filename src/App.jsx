@@ -1,9 +1,23 @@
-import { Box, Button, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  ModalOverlay,
+  useDisclosure,
+  VStack,
+} from "@chakra-ui/react";
 import React from "react";
 import { useState } from "react";
 import Header from "./components/Layout/Header";
 import TestCode from "./components/Layout/CodeArea/TestCode";
 import { useEffect } from "react";
+import Introduction from "./components/Layout/Introduction";
+import Stats from "./components/Layout/Stats";
 
 const App = () => {
   const [right, setRight] = useState(0);
@@ -56,27 +70,54 @@ const App = () => {
   }, [timer]);
 
   return (
-    <Box h="100vh" w="100vw" overflow={"hidden"} p={10}>
-      <VStack w="full" h="full" align={"start"} maxW={"5xl"} mx="auto" gap="4">
-        <Header
-          right={right}
-          wrong={wrong}
-          duration={duration}
-          setDuration={setDuration}
-          timer={timer}
-        />
-        <Button onClick={() => setHasStarted(true)}>click me</Button>
-
-        <Box flex={1} w="full">
-          <TestCode
-            hasStarted={hasStarted}
-            hasEnded={hasEnded}
-            incrementRight={incrementRight}
-            incrementWrong={incrementWrong}
+    <>
+      <Box h="100vh" w="100vw" overflow={"hidden"} p={10}>
+        <VStack
+          w="full"
+          h="full"
+          align={"start"}
+          maxW={"5xl"}
+          mx="auto"
+          gap="4"
+        >
+          <Header
+            right={right}
+            wrong={wrong}
+            duration={duration}
+            setDuration={setDuration}
+            timer={timer}
           />
-        </Box>
-      </VStack>
-    </Box>
+          <Button onClick={() => setHasStarted(true)}>click me</Button>
+
+          <Box flex={1} w="full">
+            <TestCode
+              hasStarted={hasStarted}
+              hasEnded={hasEnded}
+              incrementRight={incrementRight}
+              incrementWrong={incrementWrong}
+            />
+          </Box>
+        </VStack>
+      </Box>
+      {/* intro modal */}
+
+      {
+        <Introduction
+          hasEnded={hasEnded}
+          hasStarted={hasStarted}
+          setHasStarted={setHasStarted}
+        />
+      }
+
+      {/* stats Modal */}
+      {
+        <Stats
+          hasEnded={hasEnded}
+          hasStarted={hasStarted}
+          setHasStarted={setHasStarted}
+        />
+      }
+    </>
   );
 };
 
