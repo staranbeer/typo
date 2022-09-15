@@ -9,10 +9,13 @@ import {
 import React from "react";
 import { HiOutlineMoon, HiOutlineSun } from "react-icons/hi";
 
-const Header = ({ right, wrong }) => {
+const Header = ({ right, wrong, timer, duration, setDuration }) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const bgColor = useColorModeValue("gray.50", "#131313");
+  const bgColor = useColorModeValue("white", "#131313");
 
+  const handleDurationChange = (e) => {
+    setDuration(e.target.value);
+  };
   return (
     <HStack
       borderRadius={"lg"}
@@ -23,23 +26,18 @@ const Header = ({ right, wrong }) => {
       px={8}
     >
       {/* mode */}
-      <HStack gap={20}>
-        <HStack spacing={3}>
-          <Box>Mode:</Box>
-          <Select>
-            <option>Keywords</option>
-          </Select>
-        </HStack>
 
-        {/* stats */}
-        <HStack spacing={8}>
-          <Box color="green.400" fontWeight={"bold"}>
-            Right: {right}
-          </Box>
-          <Box color="red.400" fontWeight={"bold"}>
-            Wrong: {wrong}
-          </Box>
-        </HStack>
+      {/* stats */}
+      <HStack spacing={8}>
+        <Button color="gray.300" fontWeight={"bold"}>
+          Time elapsed: {timer}
+        </Button>
+        <Button color="green.400" fontWeight={"bold"}>
+          Right: {right}
+        </Button>
+        <Button color="red.400" fontWeight={"bold"}>
+          Wrong: {wrong}
+        </Button>
       </HStack>
 
       {/* color mode */}

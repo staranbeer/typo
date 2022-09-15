@@ -8,7 +8,7 @@ import isInLimit from "../../../../lib/isInlimit";
 import isSameKey from "../../../../lib/isSameKey";
 import Char from "./Char";
 
-const TestCode = ({ incrementRight, incrementWrong }) => {
+const TestCode = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
   const [pressedKey, setPressedKey] = useState("");
 
   const [arrayIndex, setArrayIndex] = useState(0);
@@ -33,11 +33,17 @@ const TestCode = ({ incrementRight, incrementWrong }) => {
   }, []);
 
   useEffect(() => {
-    const windowEventListenerId = window.addEventListener("keydown", (e) => {
-      handleKeyDown(e);
-    });
-    return () => window.removeEventListener("keydown", windowEventListenerId);
-  }, []);
+    if (hasStarted && !hasEnded) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    if (hasEnded) {
+      console.log("it has ended");
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [hasStarted, hasEnded]);
 
   useEffect(() => {
     // 1. whenever the index reaches the length of the code string,
@@ -54,6 +60,10 @@ const TestCode = ({ incrementRight, incrementWrong }) => {
       setPressedKey("");
     }
   }, [index]);
+
+  useEffect(() => {
+    console.log(hasEnded);
+  }, [hasEnded]);
 
   useEffect(() => {
     // 1. whenever a valid key is pressed, set the currentKey to the next
