@@ -1,18 +1,24 @@
+import React, { useState, useEffect, useCallback } from "react";
 import { Box, HStack, Stack } from "@chakra-ui/react";
-import React, { useCallback } from "react";
-import { useState } from "react";
-import { useEffect } from "react";
-import keywords from "../../../../lib/generateKeywords";
 import isValidKey from "../../../../lib/isValidKey";
 import isInLimit from "../../../../lib/isInlimit";
 import isSameKey from "../../../../lib/isSameKey";
-import Char from "./Char";
+import { useDispatch, useSelector } from "react-redux";
+import { incrementCorrect, incrementWrong } from "../../../store/statsSlice";
+import Characters from "./Characters";
 
-const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
+const Game = () => {
+  const dispatch = useDispatch();
+
+  /* global state */
+  const { hasStarted, hasEnded } = useSelector((state) => state.game);
+  const { keywords } = useSelector((state) => state.code);
+
+  /* component state */
   const [pressedKey, setPressedKey] = useState("");
 
-  const [arrayIndex, setArrayIndex] = useState(0);
   const [index, setIndex] = useState(0);
+  const [arrayIndex, setArrayIndex] = useState(0);
 
   const [currentKey, setCurrentKey] = useState("");
   const [beforeKeys, setBeforeKeys] = useState([]);
@@ -20,6 +26,25 @@ const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
 
   const [code, setCode] = useState(keywords[arrayIndex]);
 
+  /* Add an event listener to the window */
+  useEffect(() => {
+    // add a keydown event listener when
+    // the game starts
+
+    if (hasStarted && !hasEnded) {
+      window.addEventListener("keydown", handleKeyDown);
+    }
+
+    // remove the listener when game ends
+
+    if (hasEnded) {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [hasStarted, hasEnded]);
+
+  /* check which key was pressed */
   const handleKeyDown = useCallback((e) => {
     // 1. whenever a key is pressed, set the pressedKey to the key that was pressed
     // 2. increment the index if index is less than the length of the code
@@ -32,39 +57,7 @@ const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
     }
   }, []);
 
-  useEffect(() => {
-    if (hasStarted && !hasEnded) {
-      window.addEventListener("keydown", handleKeyDown);
-    }
-
-    if (hasEnded) {
-      console.log("it has ended");
-      window.removeEventListener("keydown", handleKeyDown);
-    }
-
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [hasStarted, hasEnded]);
-
-  useEffect(() => {
-    // 1. whenever the index reaches the length of the code string,
-    //    reset the index to 0 and add 1 to the arrayIndex
-
-    // 2. Reset all of the values to their initial state
-
-    if (index === code.length) {
-      setIndex(0);
-      setArrayIndex((prevArrayIndex) => prevArrayIndex + 1);
-      setCode(keywords[arrayIndex]);
-      setBeforeKeys([]);
-      setAfterKeys([]);
-      setPressedKey("");
-    }
-  }, [index]);
-
-  useEffect(() => {
-    console.log(hasEnded);
-  }, [hasEnded]);
-
+  /* if <pressedKey> is equal to the <currentKey>, change its color */
   useEffect(() => {
     // 1. whenever a valid key is pressed, set the currentKey to the next
     //    character in the code string.
@@ -82,18 +75,18 @@ const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
 
       if (isSameKey(pressedKey, currentKey)) {
         // if the pressed key and the current key are the same
-        incrementRight();
+        dispatch(incrementCorrect());
 
         if (index < code.length) {
           // if the index is in bounds of the code string
 
           setBeforeKeys((prev) => [
             ...prev,
-            { key: currentKey, color: "white" },
+            { key: currentKey, isCorrect: true },
           ]);
         }
       } else {
-        incrementWrong();
+        dispatch(incrementWrong());
         // if the currentKey and pressed key are not the same
 
         if (index < code.length) {
@@ -101,7 +94,7 @@ const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
 
           setBeforeKeys((prev) => [
             ...prev,
-            { key: currentKey, color: "darkgray" },
+            { key: currentKey, isCorrect: false },
           ]);
         }
       }
@@ -110,7 +103,24 @@ const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
       // if the pressed key is not an alphanumeric character
     }
 
-    setAfterKeys(code.split("").slice(index + 1));
+    setAfterKeys(
+      code
+        .split("")
+        .slice(index + 1)
+        .map((i) => ({ key: i, isCorrect: false }))
+    );
+  }, [index]);
+
+  /* when the current word finishes, go to the next word */
+  useEffect(() => {
+    if (index === code.length) {
+      setIndex(0);
+      setArrayIndex((prevArrayIndex) => prevArrayIndex + 1);
+      setCode(keywords[arrayIndex]);
+      setBeforeKeys([]);
+      setAfterKeys([]);
+      setPressedKey("");
+    }
   }, [index]);
 
   return (
@@ -122,17 +132,9 @@ const Game = ({ incrementRight, incrementWrong, hasStarted, hasEnded }) => {
         color="gray.400"
         fontSize={"2xl"}
       >
-        {beforeKeys.map((i, index) => {
-          return (
-            <Char key={index} color={i.color}>
-              {i.key}
-            </Char>
-          );
-        })}
+        <Characters characters={beforeKeys} />
         <span className="cursor key">{currentKey}</span>
-        {afterKeys.map((i, index) => {
-          return <Char key={index}>{i}</Char>;
-        })}
+        <Characters characters={afterKeys} />
       </Box>
     </HStack>
   );

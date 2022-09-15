@@ -3,7 +3,7 @@ import { Box, Button, useDisclosure, VStack } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import Introduction from "./components/Layout/Introduction";
 import Stats from "./components/Layout/Stats";
-import Game from "./components/Layout/CodeArea/Game";
+import Game from "./components/Layout/Game/Game";
 import Header from "./components/Layout/Header";
 
 /*  actions */

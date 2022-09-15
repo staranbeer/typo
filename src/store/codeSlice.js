@@ -1,9 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
+import generateKeywords from "../../lib/generateKeywords";
 
 const codeSlice = createSlice({
   name: "code",
   initialState: {
-    codeString: "",
+    mode: "",
+    keywords: generateKeywords(),
   },
   reducers: {
     changeCode: (state, action) => {
