@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Box, HStack, Stack } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import isValidKey from "../../../../lib/isValidKey";
 import isInLimit from "../../../../lib/isInlimit";
 import isSameKey from "../../../../lib/isSameKey";

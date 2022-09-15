@@ -14,9 +14,9 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
-const Introduction = () => {
+const Introduction = ({ isOpen, onClose }) => {
   return (
-    <Modal isCentered={true} size="xl">
+    <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Typo</ModalHeader>

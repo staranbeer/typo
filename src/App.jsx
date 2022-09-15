@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, useDisclosure, VStack } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
 import Introduction from "./components/Layout/Introduction";
@@ -15,6 +15,19 @@ const App = () => {
   const { timer } = useSelector((state) => state.timer);
   const { hasStarted, hasEnded } = useSelector((state) => state.game);
   const { duration } = useSelector((state) => state.game);
+
+  // component state
+  const [isIntroModalOpen, setIntroModalOpen] = useState(true);
+  const [isStatsModalOpen, setStatsModalOpen] = useState(true);
+
+  const closeStatsModal = () => {
+    setStatsModalOpen(false);
+  };
+
+  const closeIntroModal = () => {
+    setIntroModalOpen(false);
+    console.log("closed");
+  };
 
   const dispatch = useDispatch();
 
@@ -69,10 +82,20 @@ const App = () => {
       </Box>
 
       {/* intro modal */}
-      {<Introduction />}
+      {
+        <Introduction
+          isOpen={!hasStarted && !hasEnded && isIntroModalOpen}
+          onClose={closeIntroModal}
+        />
+      }
 
       {/* stats Modal */}
-      {<Stats />}
+      {
+        <Stats
+          isOpen={hasEnded && isStatsModalOpen}
+          onClose={closeStatsModal}
+        />
+      }
     </>
   );
 };
