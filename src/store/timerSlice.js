@@ -12,6 +12,7 @@ const timerSlice = createSlice({
     stopTimer: (state) => {
       state.timer = state.timer;
     },
+
     resetTimer: (state) => {
       state.timer = 0;
     },

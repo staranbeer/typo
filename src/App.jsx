@@ -26,7 +26,6 @@ const App = () => {
 
   const closeIntroModal = () => {
     setIntroModalOpen(false);
-    console.log("closed");
   };
 
   const dispatch = useDispatch();
@@ -37,22 +36,21 @@ const App = () => {
 
     if (hasStarted) {
       const interval = setInterval(() => {
-        if (timer < duration && !hasEnded) {
+        if (timer <= duration && !hasEnded) {
           dispatch(incrementTimer());
+        } else {
+          clearInterval(interval);
         }
       }, 1000);
+
+      if (+timer >= +duration) {
+        dispatch(stopGame());
+        dispatch(stopTimer());
+      }
+
       return () => clearInterval(interval);
     }
-  }, [hasStarted, hasEnded]);
-
-  useEffect(() => {
-    // stop the timer when the game ends
-
-    if (timer === duration) {
-      dispatch(stopTimer());
-      dispatch(stopGame());
-    }
-  }, [timer]);
+  }, [hasStarted, hasEnded, timer]);
 
   return (
     <>
@@ -65,7 +63,7 @@ const App = () => {
           mx="auto"
           gap="4"
         >
-          <Header />
+          {hasStarted && <Header />}
 
           <Button
             onClick={() => {
@@ -76,7 +74,7 @@ const App = () => {
           </Button>
 
           <Box flex={1} w="full">
-            <Game />
+            {hasStarted && <Game />}
           </Box>
         </VStack>
       </Box>

@@ -20,9 +20,14 @@ const gameSlice = createSlice({
       state.hasStarted = false;
       state.hasEnded = true;
     },
+
+    changeGameDuration: (state, action) => {
+      const { duration } = action.payload;
+      state.duration = duration;
+    },
   },
 });
 
-export const { startGame, stopGame, duration } = gameSlice.actions;
+export const { startGame, stopGame, changeGameDuration } = gameSlice.actions;
 
 export default gameSlice.reducer;

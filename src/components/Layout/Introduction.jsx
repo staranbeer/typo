@@ -14,7 +14,29 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 
+import { useDispatch } from "react-redux";
+import { changeGameMode } from "../../store/codeSlice";
+import { changeGameDuration } from "../../store/gameSlice";
+
 const Introduction = ({ isOpen, onClose }) => {
+  const dispatch = useDispatch();
+
+  const handleModeChange = (e) => {
+    dispatch(
+      changeGameMode({
+        mode: e.target.value,
+      })
+    );
+  };
+
+  const handleDurationChange = (e) => {
+    dispatch(
+      changeGameDuration({
+        duration: e.target.value,
+      })
+    );
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="xl">
       <ModalOverlay />
@@ -40,7 +62,7 @@ const Introduction = ({ isOpen, onClose }) => {
           <SimpleGrid mt="10" gap="6" columns={"2"}>
             <GridItem gap="2" w="full" alignItems={"start"}>
               <label>Select Mode</label>
-              <Select mt="2">
+              <Select mt="2" onChange={handleModeChange}>
                 {["Vanilla Js", "DOM", "Node"].map((i) => (
                   <option key={i} value={i}>
                     {i}
@@ -51,8 +73,8 @@ const Introduction = ({ isOpen, onClose }) => {
 
             <GridItem w="full" alignItems={"start"}>
               <label>Select Duration</label>
-              <Select mt="2">
-                {["10", "30", "60"].map((i) => (
+              <Select mt="2" onChange={handleDurationChange}>
+                {["2", "5", "7"].map((i) => (
                   <option key={i} value={i}>
                     {i} seconds
                   </option>

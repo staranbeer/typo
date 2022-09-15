@@ -6,13 +6,15 @@ const codeSlice = createSlice({
   initialState: {
     keywords: generateKeywords(),
   },
+
   reducers: {
-    changeCode: (state, action) => {
-      state.codeString += "taran";
+    changeGameMode: (state, action) => {
+      const { mode } = action.payload;
+      state.keywords = generateKeywords(mode);
     },
   },
 });
 
-export const { changeCode } = codeSlice.actions;
+export const { changeGameMode } = codeSlice.actions;
 
 export default codeSlice.reducer;
