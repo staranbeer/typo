@@ -16,7 +16,7 @@ import React from "react";
 
 import { useDispatch } from "react-redux";
 import { changeGameMode } from "../../store/codeSlice";
-import { changeGameDuration } from "../../store/gameSlice";
+import { changeGameDuration, startGame } from "../../store/gameSlice";
 
 const Introduction = ({ isOpen, onClose }) => {
   const dispatch = useDispatch();
@@ -38,7 +38,13 @@ const Introduction = ({ isOpen, onClose }) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered={true} size="xl">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      closeOnOverlayClick={false}
+      isCentered={true}
+      size="xl"
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Typo</ModalHeader>
@@ -85,7 +91,15 @@ const Introduction = ({ isOpen, onClose }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button size={["md", "lg"]} colorScheme="blue" mr={3}>
+          <Button
+            onClick={() => {
+              dispatch(startGame());
+              // onClose();
+            }}
+            size={["md", "lg"]}
+            colorScheme="blue"
+            mr={3}
+          >
             Start practicing now!
           </Button>
         </ModalFooter>

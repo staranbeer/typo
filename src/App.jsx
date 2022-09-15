@@ -65,14 +65,6 @@ const App = () => {
         >
           {hasStarted && <Header />}
 
-          <Button
-            onClick={() => {
-              dispatch(startGame());
-            }}
-          >
-            click me
-          </Button>
-
           <Box flex={1} w="full">
             {hasStarted && <Game />}
           </Box>
