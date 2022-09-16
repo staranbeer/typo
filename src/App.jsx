@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Stats from "./components/Layout/Stats";
 import Game from "./components/Layout/Game/Game";
-
 /*  actions */
 import { startGame, stopGame } from "./store/gameSlice";
 import { incrementTimer, stopTimer } from "./store/timerSlice";
 import Layout from "./components/Layout/Layout";
+import Introduction from "./components/Layout/Introduction";
 
 const App = () => {
   /* global state */
@@ -54,14 +54,14 @@ const App = () => {
       </Layout>
 
       {/* intro modal */}
-      {/* {
+      {
         <Introduction
           isOpen={!hasStarted && !hasEnded && isIntroModalOpen}
           onClose={closeIntroModal}
         />
-      } */}
+      }
 
-      {/* stats Modal */}
+      {/* open the stats modal when the game ends */}
       {
         <Stats
           isOpen={hasEnded && isStatsModalOpen}

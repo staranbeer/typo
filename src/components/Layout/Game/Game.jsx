@@ -6,12 +6,16 @@ import isSameKey from "../../../../lib/isSameKey";
 import { useDispatch, useSelector } from "react-redux";
 import { incrementCorrect, incrementWrong } from "../../../store/statsSlice";
 import Characters from "./Characters";
+import { changeGameMode } from "../../../store/codeSlice";
+import generateKeywords from "../../../../lib/generateKeywords";
 
 const Game = () => {
   const dispatch = useDispatch();
 
   /* global state */
-  const { hasStarted, hasEnded } = useSelector((state) => state.game);
+  const { hasStarted, hasEnded, restarted } = useSelector(
+    (state) => state.game
+  );
   const { keywords } = useSelector((state) => state.code);
 
   /* component state */
@@ -41,13 +45,19 @@ const Game = () => {
       window.removeEventListener("keydown", handleKeyDown);
     }
 
+    // remove the listener when the fame restarts
+
+    if (restarted) {
+      window.removeEventListener("keydown", handleKeyDown);
+    }
+
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [hasStarted, hasEnded]);
+  }, [hasStarted, hasEnded, restarted]);
 
   /* check which key was pressed */
   const handleKeyDown = useCallback((e) => {
     // 1. whenever a key is pressed, set the pressedKey to the key that was pressed
-    // 2. increment the index if index is less than the length of the code
+    // 2. increment the index if index is less than the length of the word
 
     if (isValidKey(e.key)) {
       setPressedKey(e.key);
@@ -57,7 +67,7 @@ const Game = () => {
     }
   }, []);
 
-  /* if <pressedKey> is equal to the <currentKey>, change its color */
+  /* if <pressedKey> is equal to the <currentKey>, increment <correct> else increment <wrong> */
   useEffect(() => {
     // 1. whenever a valid key is pressed, set the currentKey to the next
     //    character in the code string.
@@ -71,7 +81,7 @@ const Game = () => {
     }
 
     if (isValidKey(pressedKey)) {
-      //  if the pressed key is an alphanumeric character
+      //  if the pressed key is an alphabetical character
 
       if (isSameKey(pressedKey, currentKey)) {
         // if the pressed key and the current key are the same
@@ -122,6 +132,19 @@ const Game = () => {
       setPressedKey("");
     }
   }, [index]);
+
+  /* reset the game when the game finishes */
+  useEffect(() => {
+    if (hasEnded) {
+      setIndex(0);
+      setArrayIndex(0);
+      setCode(keywords[arrayIndex]);
+      setBeforeKeys([]);
+      setAfterKeys([]);
+      setPressedKey("");
+      setCurrentKey(code[0]);
+    }
+  }, [hasEnded]);
 
   return (
     <HStack justify="center" h="full" w="full">

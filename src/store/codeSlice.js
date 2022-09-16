@@ -4,7 +4,7 @@ import generateKeywords from "../../lib/generateKeywords";
 const codeSlice = createSlice({
   name: "code",
   initialState: {
-    keywords: generateKeywords(),
+    keywords: generateKeywords("Vanilla Js"),
   },
 
   reducers: {

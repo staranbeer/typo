@@ -48,7 +48,7 @@ const Introduction = ({ isOpen, onClose }) => {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Typo</ModalHeader>
-        <ModalCloseButton />
+        {/* <ModalCloseButton /> */}
         <ModalBody py="10" px="8">
           <Text fontSize={"lg"}>
             A typing test and practice tool made specifically for developers.
@@ -80,7 +80,7 @@ const Introduction = ({ isOpen, onClose }) => {
             <GridItem w="full" alignItems={"start"}>
               <label>Select Duration</label>
               <Select mt="2" onChange={handleDurationChange}>
-                {["2", "5", "7"].map((i) => (
+                {["10", "30", "60"].map((i) => (
                   <option key={i} value={i}>
                     {i} seconds
                   </option>

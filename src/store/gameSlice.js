@@ -6,7 +6,7 @@ const gameSlice = createSlice({
     hasStarted: false,
     hasEnded: false,
     restarted: false,
-    duration: 2,
+    duration: 10,
   },
 
   reducers: {
