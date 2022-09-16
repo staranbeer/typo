@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Box, Button, useDisclosure, VStack } from "@chakra-ui/react";
 import { useDispatch, useSelector } from "react-redux";
-import Introduction from "./components/Layout/Introduction";
 import Stats from "./components/Layout/Stats";
 import Game from "./components/Layout/Game/Game";
-import Header from "./components/Layout/Header";
 
 /*  actions */
 import { startGame, stopGame } from "./store/gameSlice";
 import { incrementTimer, stopTimer } from "./store/timerSlice";
+import Layout from "./components/Layout/Layout";
 
 const App = () => {
   /* global state */
@@ -19,57 +17,41 @@ const App = () => {
   // component state
   const [isIntroModalOpen, setIntroModalOpen] = useState(true);
   const [isStatsModalOpen, setStatsModalOpen] = useState(true);
-
-  const closeStatsModal = () => {
-    setStatsModalOpen(false);
-  };
-
-  const closeIntroModal = () => {
-    setIntroModalOpen(false);
-  };
-
   const dispatch = useDispatch();
 
-  /* side effects */
   useEffect(() => {
-    // start a timer for <duration> seconds when the game starts
+    // start a timer for <duration> seconds when the user clicks on start game button
 
     if (hasStarted) {
       const interval = setInterval(() => {
-        if (timer <= duration && !hasEnded) {
+        if (+timer < +duration && !hasEnded) {
           dispatch(incrementTimer());
-        } else {
-          clearInterval(interval);
         }
       }, 1000);
 
       if (+timer >= +duration) {
-        dispatch(stopGame());
+        clearInterval(interval);
         dispatch(stopTimer());
+        dispatch(stopGame());
       }
 
       return () => clearInterval(interval);
     }
   }, [hasStarted, hasEnded, timer]);
 
+  const closeIntroModal = () => {
+    setIntroModalOpen(false);
+  };
+
+  const closeStatsModal = () => {
+    setStatsModalOpen(false);
+  };
+
   return (
     <>
-      <Box h="100vh" w="100vw" overflow={"hidden"} p={10}>
-        <VStack
-          w="full"
-          h="full"
-          align={"start"}
-          maxW={"5xl"}
-          mx="auto"
-          gap="4"
-        >
-          {<Header />}
-
-          <Box flex={1} w="full">
-            {<Game />}
-          </Box>
-        </VStack>
-      </Box>
+      <Layout>
+        <Game />
+      </Layout>
 
       {/* intro modal */}
       {/* {
