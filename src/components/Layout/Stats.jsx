@@ -15,8 +15,8 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { startGame } from "../../store/gameSlice";
 import {
-  calculateAccuracy,
-  calculateSpeed,
+  calculateAccuracyReducer,
+  calculateSpeedReducer,
   resetStats,
 } from "../../store/statsSlice";
 import { resetTimer } from "../../store/timerSlice";
@@ -30,8 +30,8 @@ const Stats = ({ isOpen, onClose }) => {
 
   useEffect(() => {
     if (hasEnded === true) {
-      dispatch(calculateSpeed({ duration: duration }));
-      dispatch(calculateAccuracy());
+      dispatch(calculateSpeedReducer({ duration: duration }));
+      dispatch(calculateAccuracyReducer());
     }
   }, [hasEnded]);
 
@@ -58,7 +58,7 @@ const Stats = ({ isOpen, onClose }) => {
             speed: {speed} wpm
           </Text>
           <Text fontSize={"xl"} fontWeight={"bold"}>
-            Accuracy: {accuracy || 0}%
+            Accuracy: {accuracy}%
           </Text>
         </ModalBody>
 

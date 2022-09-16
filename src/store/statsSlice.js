@@ -1,4 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { calcLength } from "framer-motion";
+import calculateAccuracy from "../../lib/calculateAccuracy";
+import calculateSpeed from "../../lib/calculateSpeed";
 
 const statsSlice = createSlice({
   name: "stats",
@@ -22,24 +25,19 @@ const statsSlice = createSlice({
       state.correct = 0;
       state.wrong = 0;
       state.speed = 0;
+      state.accuracy = 0;
     },
 
-    calculateSpeed: (state, action) => {
+    calculateSpeedReducer: (state, action) => {
       const { duration } = action.payload;
+      const { correct, wrong } = state;
 
-      let totalChars = state.correct + state.wrong;
-      let totalWords = totalChars / 5;
-      let totalSpeed = (totalWords / duration) * 60;
-
-      state.speed = totalSpeed.toFixed(2);
+      state.speed = calculateSpeed(correct, wrong, duration);
     },
 
-    calculateAccuracy: (state) => {
-      let totalChars = state.correct + state.wrong;
-      if (totalChars !== 0) {
-        let totalAccuracy = ((totalChars - state.wrong) / totalChars) * 100;
-        state.accuracy = totalAccuracy.toFixed(2);
-      }
+    calculateAccuracyReducer: (state) => {
+      let { correct, wrong } = state;
+      state.accuracy = calculateAccuracy(correct, wrong);
     },
   },
 });
@@ -48,8 +46,8 @@ export const {
   incrementCorrect,
   incrementWrong,
   resetStats,
-  calculateSpeed,
-  calculateAccuracy,
+  calculateSpeedReducer,
+  calculateAccuracyReducer,
 } = statsSlice.actions;
 
 export default statsSlice.reducer;

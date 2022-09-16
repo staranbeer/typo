@@ -63,21 +63,21 @@ const App = () => {
           mx="auto"
           gap="4"
         >
-          {hasStarted && <Header />}
+          {<Header />}
 
           <Box flex={1} w="full">
-            {hasStarted && <Game />}
+            {<Game />}
           </Box>
         </VStack>
       </Box>
 
       {/* intro modal */}
-      {
+      {/* {
         <Introduction
           isOpen={!hasStarted && !hasEnded && isIntroModalOpen}
           onClose={closeIntroModal}
         />
-      }
+      } */}
 
       {/* stats Modal */}
       {
