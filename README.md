@@ -13,7 +13,7 @@ Learn to type faster and more accurately by practicing with real keywords from y
 
 ## Quick Start
 
-To use the app, you can head over to [the official website](https://typo-peach.vercel.app/)
+To use the app, you can head over to the official [website](https://typo-peach.vercel.app/)
 
 ## Running Locally
 
