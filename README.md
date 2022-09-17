@@ -1,6 +1,7 @@
 # Typo
 
-An app that lets you generate CSS for your HTML elements with a GUI interface.
+A typing test and practice tool made specifically for developers.
+Learn to type faster and more accurately by practicing with real keywords from your favorite programming language.
 
 ![typo2](https://user-images.githubusercontent.com/62498540/190850159-a95e19ea-be14-47e6-ab54-a3fe16e78cea.png)
 
