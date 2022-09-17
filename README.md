@@ -46,7 +46,7 @@ To contribute, you can fork the project repository so that you can have your own
 
 2. Click the "Fork" Button in the upper right-hand corner of the interface.
 
-3. After the repository has been forked, you will be taken to your copy of the `css-generator` repository
+3. After the repository has been forked, you will be taken to your copy of the `typo` repository
 
 4. Now you can clone the repository locally by running the following command on your terminal.
 
