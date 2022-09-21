@@ -49,9 +49,7 @@ const App = () => {
 
   return (
     <>
-      <Layout>
-        <Game />
-      </Layout>
+      <Layout>{hasStarted && <Game />}</Layout>
 
       {/* intro modal */}
       {

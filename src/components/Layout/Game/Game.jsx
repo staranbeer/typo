@@ -144,7 +144,7 @@ const Game = () => {
       setPressedKey("");
       setCurrentKey(code[0]);
     }
-  }, [hasEnded]);
+  }, [hasEnded, restarted]);
 
   return (
     <HStack justify="center" h="full" w="full">
